@@ -1,12 +1,12 @@
 name: customdropopen
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+author: Ritika Khattar
+homepage: https://github.com/customdropopen
 
 environment:
   sdk: '>=2.18.5 <3.0.0'
   flutter: ">=1.17.0"
-
 dependencies:
   flutter:
     sdk: flutter
