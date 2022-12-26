@@ -15,8 +15,7 @@ class CustomDropOpen extends StatefulWidget {
   final double? height;
   final ShapeBorder? shape;
   final double? elevation;
-  final Widget? listData;
-  final Function(int)? onItemTap;
+  final dynamic keyName;
 
 
   const CustomDropOpen({
@@ -32,8 +31,8 @@ class CustomDropOpen extends StatefulWidget {
     this.height,
     this.shape,
      this.elevation = 0,
-    this.isDataLoading = false, this.listData,
-    this.onItemTap
+    this.keyName,
+    this.isDataLoading = false,
 
   })  : assert(items != null),
         super(key: key);
@@ -45,6 +44,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
     with SingleTickerProviderStateMixin {
   GlobalKey? key;
   bool isMenuOpen = false;
+  dynamic keyString;
   bool isSelect = false;
   Offset? buttonPosition;
   Size? buttonSize;
@@ -58,6 +58,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
       vsync: this,
       duration: const Duration(milliseconds: 250),
     );
+    keyString = widget.keyName;
     borderRadius = widget.borderRadius ?? BorderRadius.circular(4);
     key = LabeledGlobalKey("button_icon");
     super.initState();
@@ -193,12 +194,34 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                         itemCount: widget.items!.length,
                         padding: const EdgeInsets.all(0),
                         itemBuilder: (context,index) {
-                          return InkWell(
-                            onTap: () {
-                              widget.onItemTap!(index);
-                              closeMenu();
-                            },
-                            child: widget.listData,
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 10.0,right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.onChange!(index);
+                                    closeMenu();
+                                  },
+                                  child: Text(
+                                    widget.items[index].keyString,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        color: widget.index == index ?
+                                        widget.textColor : Colors.grey ,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 0.0),
+                                  child: Divider(
+                                     color: widget.textColor,
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         }),
                   ),
