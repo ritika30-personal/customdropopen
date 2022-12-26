@@ -1,37 +1,38 @@
 library customdropopen;
 import 'package:flutter/material.dart';
-// /// A Calculator.
-// class Calculator {
-//   /// Returns [value] plus 1.
-//   int addOne(int value) => value + 1;
-//
-// }
 
 
 class CustomDropOpen extends StatefulWidget {
-  final dynamic icons;
+  final dynamic items; /// Lists of items
+  final String? title;
   final BorderRadius? borderRadius;
+  final Color backgroundColor;
   final Color iconColor;
-  final bool isLoading;
-  final bool newUser;
+  final Color textColor;
+  final bool isDataLoading;
   final ValueChanged<int>? onChange;
-  final String? text;
+  final int? index;
   final double? height;
-  final BorderSide? side;
+  final ShapeBorder? shape;
   final double? elevation;
 
 
   const CustomDropOpen({
     Key? key,
-    this.icons,
+    this.backgroundColor = Colors.black,
+    this.items,
+    this.title,
     this.borderRadius,
+    this.textColor = Colors.white,
     this.iconColor = Colors.black,
     this.onChange,
-    this.text, this.height,
-     this.elevation = 0, this.side,
-    this.isLoading = false,
-    this.newUser = false,
-  })  : assert(icons != null),
+    this.index, /// selected index is required to change the color
+    this.height,
+    this.shape,
+     this.elevation = 0,
+    this.isDataLoading = false,
+
+  })  : assert(items != null),
         super(key: key);
   @override
   _CustomDropOpenState createState() => _CustomDropOpenState();
@@ -101,9 +102,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
         key:  key,
         color:  Colors.transparent,
         elevation: widget.elevation,
-        shape:  StadiumBorder(
-            side: widget.side!
-        ),
+        shape: widget.shape == null ?  StadiumBorder() : widget.shape,
         child: Padding(
           padding:  const EdgeInsets.all(0),
           child: TextButton(
@@ -126,8 +125,8 @@ class _CustomDropOpenState extends State<CustomDropOpen>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
-                  child:  Text(widget.text!,style:const TextStyle(
-                    color: Colors.white,fontSize: 14
+                  child:  Text(widget.title!,style:  TextStyle(
+                    color: widget.textColor,fontSize: 14
                   ),),
                 ),
                isSelect == false ?
@@ -164,7 +163,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                     child: Container(
                       width: 14,
                       height: 14,
-                      color: Colors.black ,
+                      color: widget.backgroundColor ,
                     ),
                   ),
                 ),
@@ -173,7 +172,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color:Colors.black,
+                    color: widget.backgroundColor,
                     borderRadius: borderRadius,
                   ),
                   child: Theme(
@@ -182,13 +181,13 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                         color: widget.iconColor,
                       ),
                     ),
-                    child: widget.isLoading == true ? Center(
-                      child: const Text('Please wait...',
+                    child: widget.isDataLoading == true ?  Center(
+                      child:  Text('Please wait...',
                         textAlign: TextAlign.center,style: TextStyle(
-                            color:Colors.white,fontWeight: FontWeight.bold
+                            color:widget.textColor,fontWeight: FontWeight.bold
                         ),),
                     ) : ListView.builder(
-                        itemCount: widget.icons!.length,
+                        itemCount: widget.items!.length,
                         padding: const EdgeInsets.all(0),
                         itemBuilder: (context,index) {
                           return Padding(
@@ -198,13 +197,15 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                                 widget.onChange!(index);
                                 closeMenu();
                               },
-                              child: Text(widget.newUser == false ? widget.icons![index]
-                                  : widget.icons![index].id,
+                              child: Text(
+                                widget.title!,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                    color: widget.text! == widget.icons![index] ?
-                                    Colors.white : Colors.grey ,fontWeight: FontWeight.bold
-                                ),),
+                                    color: widget.index == index ?
+                                    widget.textColor : Colors.grey ,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
                             ),
                           );
                         }),
