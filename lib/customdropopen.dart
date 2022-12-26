@@ -198,7 +198,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                                 closeMenu();
                               },
                               child: Text(
-                                widget.title!,
+                                widget.items[index].name,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     color: widget.index == index ?
