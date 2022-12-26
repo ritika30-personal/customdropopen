@@ -15,7 +15,7 @@ class CustomDropOpen extends StatefulWidget {
   final double? height;
   final ShapeBorder? shape;
   final double? elevation;
-  final dynamic keyName;
+
 
 
   const CustomDropOpen({
@@ -31,7 +31,7 @@ class CustomDropOpen extends StatefulWidget {
     this.height,
     this.shape,
      this.elevation = 0,
-    this.keyName,
+
     this.isDataLoading = false,
 
   })  : assert(items != null),
@@ -58,7 +58,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
       vsync: this,
       duration: const Duration(milliseconds: 250),
     );
-    keyString = widget.keyName;
+
     borderRadius = widget.borderRadius ?? BorderRadius.circular(4);
     key = LabeledGlobalKey("button_icon");
     super.initState();
@@ -205,7 +205,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                                     closeMenu();
                                   },
                                   child: Text(
-                                    widget.items[index].keyString,
+                                    widget.items[index].name,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         color: widget.index == index ?
