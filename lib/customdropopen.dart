@@ -194,7 +194,10 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                         padding: const EdgeInsets.all(0),
                         itemBuilder: (context,index) {
                           return InkWell(
-                            onTap: widget.onItemTap!(index),
+                            onTap: () {
+                              widget.onItemTap!(index);
+                              closeMenu();
+                            },
                             child: widget.listData,
                           );
                         }),
