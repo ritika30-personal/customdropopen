@@ -212,7 +212,9 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Divider(),
+                                  child: Divider(
+                                     color: widget.textColor,
+                                  ),
                                 )
                               ],
                             ),
