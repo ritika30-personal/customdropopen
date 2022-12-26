@@ -15,6 +15,8 @@ class CustomDropOpen extends StatefulWidget {
   final double? height;
   final ShapeBorder? shape;
   final double? elevation;
+  final Widget? listData;
+  final Function(int)? onItemTap;
 
 
   const CustomDropOpen({
@@ -30,7 +32,8 @@ class CustomDropOpen extends StatefulWidget {
     this.height,
     this.shape,
      this.elevation = 0,
-    this.isDataLoading = false,
+    this.isDataLoading = false, this.listData,
+    this.onItemTap
 
   })  : assert(items != null),
         super(key: key);
@@ -190,34 +193,9 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                         itemCount: widget.items!.length,
                         padding: const EdgeInsets.all(0),
                         itemBuilder: (context,index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    widget.onChange!(index);
-                                    closeMenu();
-                                  },
-                                  child: Text(
-                                    widget.items[index].name,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: widget.index == index ?
-                                        widget.textColor : Colors.grey ,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Divider(
-                                     color: widget.textColor,
-                                  ),
-                                )
-                              ],
-                            ),
+                          return InkWell(
+                            onTap: widget.onItemTap!(index),
+                            child: widget.listData,
                           );
                         }),
                   ),
