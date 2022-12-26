@@ -192,20 +192,29 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                         itemBuilder: (context,index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                widget.onChange!(index);
-                                closeMenu();
-                              },
-                              child: Text(
-                                widget.items[index].name,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    color: widget.index == index ?
-                                    widget.textColor : Colors.grey ,
-                                    fontWeight: FontWeight.bold
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    widget.onChange!(index);
+                                    closeMenu();
+                                  },
+                                  child: Text(
+                                    widget.items[index].name,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        color: widget.index == index ?
+                                        widget.textColor : Colors.grey ,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: Divider(),
+                                )
+                              ],
                             ),
                           );
                         }),
