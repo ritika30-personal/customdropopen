@@ -12,10 +12,8 @@ class CustomDropOpen extends StatefulWidget {
   final dynamic icons;
   final BorderRadius? borderRadius;
   final Color iconColor;
-  final bool isCharger;
   final bool isLoading;
   final bool newUser;
-  final bool editUser;
   final ValueChanged<int>? onChange;
   final String? text;
   final double? height;
@@ -30,9 +28,9 @@ class CustomDropOpen extends StatefulWidget {
     this.iconColor = Colors.black,
     this.onChange,
     this.text, this.height,
-    this.isCharger = false, this.elevation = 0, this.side,
+     this.elevation = 0, this.side,
     this.isLoading = false,
-    this.newUser = false, this.editUser = false,
+    this.newUser = false,
   })  : assert(icons != null),
         super(key: key);
   @override
@@ -101,18 +99,16 @@ class _CustomDropOpenState extends State<CustomDropOpen>
       },
       child: Card(
         key:  key,
-        color: widget.editUser == true ? Colors.grey.shade600 : Colors.transparent,
+        color:  Colors.transparent,
         elevation: widget.elevation,
         shape:  StadiumBorder(
             side: widget.side!
         ),
         child: Padding(
-          padding: widget.isCharger == true ?
-          const EdgeInsets.only(left: 10.0,right: 10) : const EdgeInsets.all(0),
+          padding:  const EdgeInsets.all(0),
           child: TextButton(
             onPressed: (){
-              if(widget.editUser == false) {
-                if (isMenuOpen) {
+               if (isMenuOpen) {
                   closeMenu();
                   setState(() {
                     isSelect = false;
@@ -123,7 +119,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                     isSelect = true;
                   });
                 }
-              }
+
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -203,7 +199,7 @@ class _CustomDropOpenState extends State<CustomDropOpen>
                                 closeMenu();
                               },
                               child: Text(widget.newUser == false ? widget.icons![index]
-                                  : widget.icons![index].chargerId,
+                                  : widget.icons![index].id,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     color: widget.text! == widget.icons![index] ?
